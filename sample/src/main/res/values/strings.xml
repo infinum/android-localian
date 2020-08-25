@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name" translatable="false">Localian Sample</string>
+
+    <string name="hello">Hello\n%s</string>
+
+    <string name="activity_child_label">Screen 1</string>
+    <string name="activity_child_text">Arbitrary text 1</string>
+
+    <string name="settings_label">Settings</string>
+    <string name="web_view_label">Web View</string>
+
+    <string name="croatian">Croatian</string>
+    <string name="english">English</string>
+    <string name="german">German</string>
+
+    <string name="system_language">System language</string>
+
+</resources>

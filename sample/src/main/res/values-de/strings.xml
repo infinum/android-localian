@@ -1,0 +1,15 @@
+<resources>
+    <string name="hello">Hallo\n%s</string>
+
+    <string name="activity_child_label">Bildschirm 1</string>
+    <string name="activity_child_text">Einige worte 1</string>
+
+    <string name="settings_label">Einstellungen</string>
+    <string name="web_view_label">Website</string>
+
+    <string name="croatian">Kroatisch</string>
+    <string name="english">English</string>
+    <string name="german">Deutsch</string>
+
+    <string name="system_language">Systemsprache</string>
+</resources>

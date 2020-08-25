@@ -1,0 +1,26 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+    compileSdkVersion buildConfig.compileSdk
+    buildToolsVersion buildConfig.buildTools
+
+    defaultConfig {
+        minSdkVersion buildConfig.minSdk
+        targetSdkVersion buildConfig.targetSdk
+        versionCode localian.versionCode
+        versionName localian.version
+        applicationId "com.infinum.localian.sample"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    implementation packages.kotlin.core
+    implementation packages.androidx.appcompat
+    implementation project(":localian")
+}

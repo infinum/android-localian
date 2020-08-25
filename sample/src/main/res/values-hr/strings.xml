@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="hello">Bok\n%s</string>
+
+    <string name="activity_child_label">Ekran 1</string>
+    <string name="activity_child_text">Neke riječi 1</string>
+
+    <string name="settings_label">Postavke</string>
+    <string name="web_view_label">Web stranica</string>
+
+    <string name="croatian">Hrvatski</string>
+    <string name="english">English</string>
+    <string name="german">Njemački</string>
+
+    <string name="system_language">Sistemski jezik</string>
+
+</resources>

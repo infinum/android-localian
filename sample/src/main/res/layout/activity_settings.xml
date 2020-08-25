@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/hr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/croatian" />
+
+    <Button
+        android:id="@+id/de"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/german" />
+
+    <Button
+        android:id="@+id/en"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/english" />
+
+    <Button
+        android:id="@+id/system_locale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/system_language" />
+
+</LinearLayout>
