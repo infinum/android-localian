@@ -6,14 +6,33 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        gradlePluginPortal()
         maven { url "https://dl.bintray.com/infinum/android" }
     }
     dependencies {
         classpath packages.gradle
         classpath packages.kotlin.plugin
+        classpath packages.cpd.plugin
         classpath packages.detekt.plugin
+        classpath packages.ktlint.plugin
         classpath packages.dokka.plugin
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() {
+            content {
+                includeModule("com.soywiz.korlibs.korte", "korte-jvm")
+                includeModule("org.jetbrains.trove4j", "trove4j")
+                includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
+                includeGroup("org.jetbrains.dokka")
+                includeGroup("org.jetbrains")
+            }
+        }
     }
 }
 
@@ -33,12 +52,16 @@ subprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
         maven { url "https://dl.bintray.com/infinum/android" }
     }
 
+    apply from: "$rootDir/cpd.gradle"
     apply from: "$rootDir/detekt.gradle"
+    apply from: "$rootDir/ktlint.gradle"
 }
+
+apply from: "deploy.gradle"
+apply from: "dokka.gradle"
 
 tasks.withType(JavaCompile) {
     options.compilerArgs += ["--release", "8"]
@@ -55,6 +78,25 @@ task detektAll(dependsOn: [
     description = "Run detekt on all modules"
 }
 
-apply from: "deploy.gradle"
+task ktlintAll(dependsOn: [
+        ':localian:ktlintCheck'
+]) {
+    group = "Verification"
+    description = "Run ktlint on all modules"
+}
 
-apply from: "dokka.gradle"
+task cpdAll(dependsOn: [
+        ':localian:cpdCheck'
+]) {
+    group = "Verification"
+    description = "Run CPD on all modules"
+}
+
+task runStaticChecks(dependsOn: [
+        ':detektAll',
+        ':ktlintAll',
+        ':cpdAll'
+]) {
+    group = "Verification"
+    description = "Run static checks on all modules"
+}

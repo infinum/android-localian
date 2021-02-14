@@ -3,8 +3,8 @@ package com.infinum.localian.cache
 import android.content.Context
 import android.content.SharedPreferences
 import com.infinum.localian.Localian
-import org.json.JSONObject
 import java.util.Locale
+import org.json.JSONObject
 
 /**
  * Implementation of cache using [SharedPreferences].
