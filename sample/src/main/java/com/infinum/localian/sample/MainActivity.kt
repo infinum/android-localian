@@ -3,6 +3,7 @@ package com.infinum.localian.sample
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.infinum.localian.LocalianWebViewPatcher
 import com.infinum.localian.sample.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val helper = WebViewLocaleHelper(this)
+        val patcher = LocalianWebViewPatcher(this)
 
         with(viewBinding) {
             helloView.text = getString(R.string.hello, SimpleDateFormat.getDateInstance().format(Date()))
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(it.context, ChildActivity::class.java))
             }
             showWebView.setOnClickListener {
-                helper.implementWorkaround()
+                patcher.patch()
                 startActivity(Intent(it.context, WebViewActivity::class.java))
             }
             showSettings.setOnClickListener {

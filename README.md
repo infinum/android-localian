@@ -13,9 +13,7 @@ To include _Localian_ in your project, you have to add buildscript dependencies 
 ```gradle
 buildscript {
     repositories {
-        jcenter()
-        // or ...
-        maven { url "https://dl.bintray.com/infinum/android" }
+        mavenCentral()
     }
 }
 ```
@@ -23,9 +21,7 @@ buildscript {
 ```kotlin
 buildscript {
     repositories {
-        jcenter()
-        // or ...
-        maven(url = "https://dl.bintray.com/infinum/android")
+        mavenCentral()
     }
 }
 ```
@@ -65,7 +61,7 @@ There is a third parameter in _run_ called _cache_ implemented as a simple Prefe
         Localian.setLocale(context, Locale.CANADA)
 ```
 
-_Localian_ is not responsible for updateing all already loaded locale-based data.  
+_Localian_ is not responsible for updating all already loaded locale-based data.
 You need to handle it manually, for example, restarting your Activity.
 
 ## Follow the system locale

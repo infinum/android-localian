@@ -1,5 +1,7 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
 
 apply from: 'jacoco.gradle'
 
@@ -14,8 +16,8 @@ android {
     defaultConfig {
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-        versionCode localian.versionCode
-        versionName localian.version
+        versionCode releaseConfig.versionCode
+        versionName releaseConfig.version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -38,8 +40,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs += [
+                '-Xexplicit-api=strict'
+        ]
     }
 
     sourceSets.each {
@@ -50,6 +56,7 @@ android {
 dependencies {
     implementation packages.kotlin.core
     implementation packages.androidx.annotation
+    implementation packages.androidx.startup
     implementation packages.androidx.preference
 
     testImplementation packages.junit
@@ -57,4 +64,4 @@ dependencies {
     testImplementation packages.json
 }
 
-apply from: "bintray.gradle"
+apply from: "publish.gradle"

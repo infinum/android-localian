@@ -1,5 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+}
 
 android {
     buildFeatures {
@@ -9,11 +11,12 @@ android {
     buildToolsVersion buildConfig.buildTools
 
     defaultConfig {
+        applicationId releaseConfig.group
+        applicationIdSuffix ".sample"
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-        versionCode localian.versionCode
-        versionName localian.version
-        applicationId "com.infinum.localian.sample"
+        versionCode releaseConfig.versionCode
+        versionName releaseConfig.version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

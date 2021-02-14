@@ -2,19 +2,20 @@ package com.infinum.localian.cache
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.infinum.localian.Localian
 import org.json.JSONObject
 import java.util.Locale
 
 /**
  * Implementation of cache using [SharedPreferences].
  */
-class PreferenceCache @JvmOverloads constructor(
+public class PreferenceCache @JvmOverloads constructor(
     context: Context,
     private val defaultLocale: Locale = Locale.getDefault(),
     preferenceName: String = DEFAULT_PREFERENCE_NAME
-) : Cache {
+) : Localian.Cache {
 
-    companion object {
+    private companion object {
         private const val DEFAULT_PREFERENCE_NAME = "localian_preference"
 
         private const val KEY_FOLLOW_SYSTEM_LOCALE = "key_follow_system_locale"
@@ -44,7 +45,7 @@ class PreferenceCache @JvmOverloads constructor(
             }
         } ?: defaultLocale
 
-    override fun persist(locale: Locale) =
+    override fun persist(locale: Locale): Unit =
         preferences.edit()
             .putString(
                 KEY_CURRENT_LOCALE,
@@ -56,7 +57,7 @@ class PreferenceCache @JvmOverloads constructor(
             )
             .apply()
 
-    override fun followSystemLocale(value: Boolean) =
+    override fun followSystemLocale(value: Boolean): Unit =
         preferences.edit()
             .putBoolean(
                 KEY_FOLLOW_SYSTEM_LOCALE,

@@ -1,5 +1,6 @@
 package com.infinum.localian.cache
 
+import com.infinum.localian.Localian
 import java.util.Locale
 
 /**
@@ -8,7 +9,7 @@ import java.util.Locale
  * Useful for cases like instrumentation tests, where you don't want to persist any changes
  * to the application locale.
  */
-class FakeCache : Cache {
+public class FakeCache : Localian.Cache {
 
     private var locale: Locale = Locale.getDefault()
 

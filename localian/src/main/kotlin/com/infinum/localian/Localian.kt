@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.infinum.localian
 
 import android.app.Activity
@@ -5,7 +7,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
-import com.infinum.localian.cache.Cache
+import com.infinum.localian.Localian.setLocale
 import com.infinum.localian.cache.PreferenceCache
 import com.infinum.localian.callbacks.ActivityCallbacks
 import com.infinum.localian.callbacks.ApplicationCallbacks
@@ -19,59 +21,26 @@ import java.util.Locale
  * Once you set a desired locale using [setLocale] method, Localian will enforce your application
  * to provide correctly localized data via [Resources] class.
  */
-class Localian private constructor(
-    private val application: Application,
-    private val cache: Cache
-) {
+public object Localian {
 
-    companion object {
+    private lateinit var cache: Cache
 
-        private var INSTANCE: Localian? = null
-
-        @JvmStatic
-        fun run(
-            application: Application,
-            locale: Locale = Locale.getDefault(),
-            cache: Cache = PreferenceCache(application, locale)
-        ) {
-            if (INSTANCE == null) {
-                INSTANCE = Localian(application, cache)
-                INSTANCE?.runInternal()
-            } else {
-                INSTANCE?.runInternal()
-            }
-        }
-
-        @JvmStatic
-        fun setLocale(context: Context, locale: Locale) {
-            INSTANCE?.setLocaleInternal(context, locale) ?: println("Localian is not initialised.")
-        }
-
-        @JvmStatic
-        fun getLocale(): Locale =
-            INSTANCE?.getLocaleInternal() ?: run {
-                println("Localian is not initialised.")
-                Locale.getDefault()
-            }
-
-        @JvmStatic
-        fun followSystemLocale(context: Context) {
-            INSTANCE?.followSystemLocaleInternal(context) ?: println("Localian is not initialised.")
-        }
-
-        @JvmStatic
-        fun isFollowingSystemLocale() =
-            INSTANCE?.isFollowingSystemLocaleInternal() ?: run {
-                println("Localian is not initialised.")
-                false
-            }
-    }
+    private var locale: Locale = Locale.getDefault()
 
     private var systemLocale: Locale = Locale.getDefault()
 
     private val delegate: LocaleDelegate = LocaleDelegate()
 
-    private fun runInternal() {
+    @JvmStatic
+    @JvmOverloads
+    public fun run(
+        application: Application,
+        locale: Locale = Locale.getDefault(),
+        cache: Cache = PreferenceCache(application, locale)
+    ) {
+        this.locale = locale
+        this.cache = cache
+
         application.registerActivityLifecycleCallbacks(
             ActivityCallbacks {
                 applyForActivity(it)
@@ -82,7 +51,8 @@ class Localian private constructor(
                 processConfigurationChange(application, it)
             }
         )
-        persistAndApply(
+
+        update(
             application,
             when (cache.isFollowingSystemLocale()) {
                 true -> systemLocale
@@ -91,40 +61,70 @@ class Localian private constructor(
         )
     }
 
-    private fun setLocaleInternal(context: Context, locale: Locale) {
+    @JvmStatic
+    public fun setLocale(context: Context, locale: Locale) {
+        this.locale = locale
+        if (this::cache.isInitialized.not()) {
+            this.cache = PreferenceCache(context, locale)
+        }
         cache.followSystemLocale(false)
-        persistAndApply(context, locale)
+        update(context, locale)
     }
 
-    private fun getLocaleInternal(): Locale =
-        cache.get()
+    @JvmStatic
+    public fun getLocale(context: Context): Locale {
+        if (this::cache.isInitialized.not()) {
+            this.cache = PreferenceCache(context, locale)
+        }
+        return cache.get()
+    }
 
-    private fun followSystemLocaleInternal(context: Context) {
+    @JvmStatic
+    public fun followSystemLocale(context: Context) {
+        if (this::cache.isInitialized.not()) {
+            this.cache = PreferenceCache(context, locale)
+        }
         cache.followSystemLocale(true)
-        persistAndApply(context, systemLocale)
+        update(context, systemLocale)
     }
 
-    private fun isFollowingSystemLocaleInternal() =
-        cache.isFollowingSystemLocale()
+    @JvmStatic
+    public fun isFollowingSystemLocale(context: Context): Boolean {
+        if (this::cache.isInitialized.not()) {
+            this.cache = PreferenceCache(context, locale)
+        }
+        return cache.isFollowingSystemLocale()
+    }
 
     private fun applyForActivity(activity: Activity) {
-        applyLocale(activity)
+        delegate.updateLocale(activity, cache.get())
         activity.resetTitle()
     }
 
-    private fun processConfigurationChange(context: Context, config: Configuration) {
-        systemLocale = config.getLocaleCompat()
+    private fun processConfigurationChange(context: Context, configuration: Configuration) {
+        systemLocale = configuration.getLocaleCompat()
         when (cache.isFollowingSystemLocale()) {
-            true -> persistAndApply(context, systemLocale)
-            false -> applyLocale(context)
+            true -> update(context, systemLocale)
+            false -> delegate.updateLocale(context, cache.get())
         }
     }
 
-    private fun persistAndApply(context: Context, locale: Locale) {
+    private fun update(context: Context, locale: Locale) {
         cache.persist(locale)
         delegate.updateLocale(context, locale)
     }
 
-    private fun applyLocale(context: Context) =
-        delegate.updateLocale(context, cache.get())
+    /**
+     *  Interface for storing a Locale and its data.
+     */
+    public interface Cache {
+
+        public fun get(): Locale
+
+        public fun persist(locale: Locale)
+
+        public fun followSystemLocale(value: Boolean)
+
+        public fun isFollowingSystemLocale(): Boolean
+    }
 }
