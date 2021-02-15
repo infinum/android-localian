@@ -37,13 +37,11 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun setNewLocale(locale: Locale) {
-        Localian.setLocale(this, locale)
-        restart()
+        Localian.setLocale(this, locale) { restart() }
     }
 
     private fun followSystemLocale() {
-        Localian.followSystemLocale(this)
-        restart()
+        Localian.followSystemLocale(this) { restart() }
     }
 
     private fun restart() {

@@ -7,6 +7,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
     compileSdkVersion buildConfig.compileSdk
     buildToolsVersion buildConfig.buildTools
 
@@ -19,6 +20,10 @@ android {
         versionName releaseConfig.version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets.each {
+        it.java.srcDirs += "src/$it.name/kotlin"
     }
 }
 

@@ -8,6 +8,7 @@ apply from: 'jacoco.gradle'
 android {
     buildFeatures {
         buildConfig = false
+        viewBinding = false
     }
 
     compileSdkVersion buildConfig.compileSdk

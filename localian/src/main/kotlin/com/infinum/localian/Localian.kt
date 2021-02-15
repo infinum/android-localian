@@ -16,7 +16,7 @@ import com.infinum.localian.extensions.resetTitle
 import java.util.Locale
 
 /**
- * Localian is a tool to manage your application locale and language.
+ * Localian is a compatibility solution to manage your application locale and language.
  *
  * Once you set a desired locale using [setLocale] method, Localian will enforce your application
  * to provide correctly localized data via [Resources] class.
@@ -62,13 +62,15 @@ public object Localian {
     }
 
     @JvmStatic
-    public fun setLocale(context: Context, locale: Locale) {
+    @JvmOverloads
+    public fun setLocale(context: Context, locale: Locale, callback: Callback? = null) {
         this.locale = locale
         if (this::cache.isInitialized.not()) {
             this.cache = PreferenceCache(context, locale)
         }
         cache.followSystemLocale(false)
         update(context, locale)
+        callback?.onLocaleChanged()
     }
 
     @JvmStatic
@@ -80,12 +82,14 @@ public object Localian {
     }
 
     @JvmStatic
-    public fun followSystemLocale(context: Context) {
+    @JvmOverloads
+    public fun followSystemLocale(context: Context, callback: Callback? = null) {
         if (this::cache.isInitialized.not()) {
             this.cache = PreferenceCache(context, locale)
         }
         cache.followSystemLocale(true)
         update(context, systemLocale)
+        callback?.onLocaleChanged()
     }
 
     @JvmStatic
@@ -115,7 +119,7 @@ public object Localian {
     }
 
     /**
-     *  Interface for storing a Locale and its data.
+     *  Cache for storing a Locale and its data.
      */
     public interface Cache {
 
@@ -126,5 +130,13 @@ public object Localian {
         public fun followSystemLocale(value: Boolean)
 
         public fun isFollowingSystemLocale(): Boolean
+    }
+
+    /**
+     *  Callback that notifies when Locale has been changed.
+     */
+    public fun interface Callback {
+
+        public fun onLocaleChanged()
     }
 }
