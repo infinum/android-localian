@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.infinum.localian.Localian
-import com.infinum.localian.sample.LocalianApp.Companion.CROATIAN
-import com.infinum.localian.sample.LocalianApp.Companion.ENGLISH
-import com.infinum.localian.sample.LocalianApp.Companion.GERMAN
+import com.infinum.localian.sample.SampleApp.Companion.CROATIAN
+import com.infinum.localian.sample.SampleApp.Companion.ENGLISH
+import com.infinum.localian.sample.SampleApp.Companion.GERMAN
 import com.infinum.localian.sample.databinding.ActivitySettingsBinding
 import java.util.Locale
 
@@ -44,10 +44,13 @@ class SettingsActivity : BaseActivity() {
         Localian.followSystemLocale(this) { restart() }
     }
 
-    private fun restart() {
-        val i = Intent(this, MainActivity::class.java)
-        startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
-
-        Toast.makeText(this, "Activity restarted", Toast.LENGTH_SHORT).show()
-    }
+    private fun restart() =
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+        ).also {
+            Toast.makeText(this, getString(R.string.restarted), Toast.LENGTH_SHORT).show()
+        }
 }

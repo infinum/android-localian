@@ -9,7 +9,7 @@ ext.versions = [
         "detekt"    : "1.15.0",
         "ktlint"    : "9.4.1",
         "cpd"       : "3.1",
-        "dokka"     : "0.10.1",
+        "dokka"     : "1.4.20",
         "junit"     : "4.13",
         "mockk"     : "1.10.0",
         "json"      : "20200518"

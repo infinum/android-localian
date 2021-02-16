@@ -1,0 +1,9 @@
+-keep public class com.infinum.localian.* {
+  public protected *;
+}
+-keep public class com.infinum.localian.Localian {
+  public protected *;
+}
+-keep public class com.infinum.localian.LocalianWebViewPatcher {
+  public protected *;
+}

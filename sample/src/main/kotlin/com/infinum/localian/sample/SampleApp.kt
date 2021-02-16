@@ -4,7 +4,7 @@ import android.app.Application
 import com.infinum.localian.Localian
 import java.util.Locale
 
-class LocalianApp : Application() {
+class SampleApp : Application() {
 
     companion object {
         val CROATIAN = Locale("hr", "HR")
@@ -15,6 +15,6 @@ class LocalianApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Localian.run(application = this, locale = CROATIAN)
+        Localian.run(application = this, locale = ENGLISH)
     }
 }

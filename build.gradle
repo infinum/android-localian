@@ -58,10 +58,10 @@ subprojects {
     apply from: "$rootDir/cpd.gradle"
     apply from: "$rootDir/detekt.gradle"
     apply from: "$rootDir/ktlint.gradle"
+    apply from: "$rootDir/dokka.gradle"
 }
 
 apply from: "deploy.gradle"
-apply from: "dokka.gradle"
 
 tasks.withType(JavaCompile) {
     options.compilerArgs += ["--release", "8"]
