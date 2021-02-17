@@ -8,8 +8,8 @@ import androidx.annotation.MainThread
  * LocalianWebViewPatcher implements a workaround that fixes the unwanted side effect while
  * using a [WebView] introduced in Android N.
  *
- * For unknown reasons, the very first creation of a [WebView] (either programmatically
- * or via inflation) resets an application locale to the system default.
+ * The very first creation of a [WebView], programmatically
+ * or via inflation, resets an application Locale to the system default.
  * More on that: https://issuetracker.google.com/issues/37113860
  */
 public class LocalianWebViewPatcher(

@@ -27,22 +27,24 @@ internal class LocaleDelegate {
         val currentLocale = resources.configuration.getLocaleCompat()
 
         if (currentLocale != locale) {
-            val config = Configuration(resources.configuration)
+            val configuration = Configuration(resources.configuration)
             when {
-                isAtLeastSdk(Build.VERSION_CODES.N) -> setLocaleNew(config, locale)
-                isAtLeastSdk(Build.VERSION_CODES.JELLY_BEAN_MR1) -> setLocaleLegacy(config, locale)
-                else -> setLocale(config, locale)
+                isAtLeastSdk(Build.VERSION_CODES.N) ->
+                    setLocaleNew(configuration, locale)
+                isAtLeastSdk(Build.VERSION_CODES.JELLY_BEAN_MR1) ->
+                    setLocaleLegacy(configuration, locale)
+                else -> setLocale(configuration, locale)
             }
-            resources.updateConfiguration(config, resources.displayMetrics)
+            resources.updateConfiguration(configuration, resources.displayMetrics)
         }
     }
 
     @Suppress("SpreadOperator")
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun setLocaleNew(config: Configuration, locale: Locale) {
+    private fun setLocaleNew(configuration: Configuration, locale: Locale) {
         val defaultLocales = LocaleList.getDefault()
 
-        config.setLocales(
+        configuration.setLocales(
             LocaleList(
                 *linkedSetOf(locale)
                     .apply { addAll(List<Locale>(defaultLocales.size()) { defaultLocales[it] }) }
@@ -52,12 +54,12 @@ internal class LocaleDelegate {
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private fun setLocaleLegacy(config: Configuration, locale: Locale) {
-        config.setLocale(locale)
+    private fun setLocaleLegacy(configuration: Configuration, locale: Locale) {
+        configuration.setLocale(locale)
     }
 
     @Suppress("DEPRECATION")
-    private fun setLocale(config: Configuration, locale: Locale) {
-        config.locale = locale
+    private fun setLocale(configuration: Configuration, locale: Locale) {
+        configuration.locale = locale
     }
 }

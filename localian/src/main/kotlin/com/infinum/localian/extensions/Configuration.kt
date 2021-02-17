@@ -6,8 +6,7 @@ import java.util.Locale
 
 @Suppress("DEPRECATION")
 internal fun Configuration.getLocaleCompat(): Locale =
-    if (isAtLeastSdk(Build.VERSION_CODES.N)) {
-        locales.get(0)
-    } else {
-        locale
+    when {
+        isAtLeastSdk(Build.VERSION_CODES.N) -> locales.get(0)
+        else -> locale
     }
