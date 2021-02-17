@@ -9,7 +9,7 @@ import java.util.Locale
  * Useful for cases like instrumentation tests, where you don't want to persist any changes
  * to the application locale.
  */
-public class FakeCache : Localian.Cache {
+public class MemoryCache : Localian.Cache {
 
     private var locale: Locale = Locale.getDefault()
 
