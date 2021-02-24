@@ -71,11 +71,18 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+task lintAll(dependsOn: [
+        ':localian:lintRelease'
+]) {
+    group = "Verification"
+    description = "Run Lint on all modules"
+}
+
 task detektAll(dependsOn: [
     ':localian:detekt'
 ]) {
     group = "Verification"
-    description = "Run detekt on all modules"
+    description = "Run Detekt on all modules"
 }
 
 task ktlintAll(dependsOn: [
@@ -93,6 +100,7 @@ task cpdAll(dependsOn: [
 }
 
 task runStaticChecks(dependsOn: [
+        ':lintAll',
         ':detektAll',
         ':ktlintAll',
         ':cpdAll'
