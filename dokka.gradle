@@ -24,6 +24,10 @@ tasks.named("dokkaJavadoc") {
                 prefix.set("com.infinum.localian.extensions")
                 suppress.set(true)
             }
+            perPackageOption {
+                prefix.set("com.infinum.localian.sample")
+                suppress.set(true)
+            }
         }
     }
 }

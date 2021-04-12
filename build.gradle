@@ -2,21 +2,19 @@ buildscript {
 
     apply from: "config.gradle"
     apply from: "maven.gradle"
-    apply from: "dependencies.gradle"
 
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://dl.bintray.com/infinum/android" }
     }
     dependencies {
-        classpath packages.gradle
-        classpath packages.kotlin.plugin
-        classpath packages.cpd.plugin
-        classpath packages.detekt.plugin
-        classpath packages.ktlint.plugin
-        classpath packages.dokka.plugin
+        classpath libs.gradle
+        classpath libs.kotlin.plugin
+        classpath libs.cpd
+        classpath libs.detekt.plugin
+        classpath libs.ktlint
+        classpath libs.dokka
     }
 }
 
@@ -26,11 +24,7 @@ allprojects {
         mavenCentral()
         jcenter() {
             content {
-                includeModule("com.soywiz.korlibs.korte", "korte-jvm")
-                includeModule("org.jetbrains.trove4j", "trove4j")
                 includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
-                includeGroup("org.jetbrains.dokka")
-                includeGroup("org.jetbrains")
             }
         }
     }
@@ -43,7 +37,7 @@ subprojects {
         configurations.all {
             resolutionStrategy {
                 dependencySubstitution {
-                    substitute module(packages.localian) with project(':localian')
+                    //substitute module(packages.localian) with project(':localian')
                 }
             }
         }
@@ -52,7 +46,6 @@ subprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://dl.bintray.com/infinum/android" }
     }
 
     apply from: "$rootDir/cpd.gradle"

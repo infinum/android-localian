@@ -1,15 +1,8 @@
-task deployAll(dependsOn: [
-        'deployLocalian'
-]) {
-    group = "Deploy"
-    description = "Deploy all modules to Bintray"
-}
-
 task deployLocalian(dependsOn: [
-        ':localian:build',
-        ':localian:install',
-        ':localian:bintrayUpload'
+        ':localian:clean',
+        ':localian:publishReleasePublicationToSonatypeRepository',
+        ':localian:publishReleasePublicationToGithubRepository'
 ]) {
     group = "Deploy"
-    description = "Deploy module to Bintray"
+    description = "Deploy module to repositories"
 }

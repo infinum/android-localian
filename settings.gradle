@@ -1,2 +1,5 @@
-include ':localian', ':sample'
+enableFeaturePreview("VERSION_CATALOGS")
+
 rootProject.name='Localian'
+
+include ':localian', ':sample'

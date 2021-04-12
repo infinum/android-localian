@@ -57,14 +57,10 @@ android {
 }
 
 dependencies {
-    implementation packages.kotlin.core
-    implementation packages.androidx.annotation
-    implementation packages.androidx.startup
-    implementation packages.androidx.preference
+    implementation libs.kotlin.core
+    implementation libs.bundles.androidx
 
-    testImplementation packages.junit
-    testImplementation packages.mockk
-    testImplementation packages.json
+    testImplementation libs.bundles.testing
 }
 
 apply from: "publish.gradle"
