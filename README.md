@@ -1,10 +1,8 @@
 # Localian
 
-Localian is a library that manages your application locale and language across multiple Android API levels.
- 
-Set a desired _Locale_ when creating a new _Localian_ instance and it will force your application to use proper ocalized data via Resources class.
+Localian is a library that manipulates your application locale and language across multiple Android API levels with possibility not to restart application process.
 
-The library has been inspired by the following [blogpost](https://proandroiddev.com/change-language-programmatically-at-runtime-on-android-5e6bc15c758).
+Create a new _Localian_ instance with desired _Locale_ and make your application use proper localized data via Resources class from according Context.
 
 ## Usage
 To include _Localian_ in your project, you have to add buildscript dependencies in your project level `build.gradle` or `build.gradle.kts`:
@@ -51,7 +49,8 @@ class LocalianApp : Application() {
     }
 }
 ```
-There is a third parameter in _run_ called _cache_ implemented as a simple Preferences based cache for the selected Locale.
+There is a third parameter in _run_ called _cache_ implemented as a simple Preferences based cache for the selected Locale.  
+An interface _Localian.Cache_ has been exposed for any specific implementations a project might need.  
 
 ## Features
 
@@ -62,7 +61,8 @@ There is a third parameter in _run_ called _cache_ implemented as a simple Prefe
 ```
 
 _Localian_ is not responsible for updating all already loaded locale-based data.
-You need to handle it manually, for example, restarting your Activity.
+You need to handle it manually, for example, restarting your Activity.  
+However, _Localian_ does provide a _Localian.Callback_ when _Locale_ has changed which you can use to react and restart currently visible Activity or take any other suitable actions.  
 
 ## Follow the system locale
 
@@ -72,18 +72,20 @@ _Localian_ can follow the system Locale and react whenever it changes:
 Localian.followSystemLocale(context)
  ```
 
-Any call to `setLocale()` stops following the system Locale and resets `isFollowingSystemLocale()` Boolean. 
+Any call to `setLocale()` stops following the system Locale and resets `isFollowingSystemLocale()` Boolean to _false_. 
 
 ## WebView
 
 Starting from *Android N*, there is a [side effect](https://issuetracker.google.com/issues/37113860) when using a [WebView](https://developer.android.com/reference/android/webkit/WebView) in your project.   
-The very first creation of WebView, programmatically or via declarative, resets Locale to the system default.  
+The very first creation of WebView of any kind, programmatically or declarative, resets Locale to the system default.  
 According to the issue above it will not be fixed any time soon.  
 
 There are several of concepts for a solution of this problem, but the core idea is essentially the same.  
 You have to set back your desired Locale after the first usage of a WebView.  
-For example, you can programmatically create a fake WebView and immediately set a locale back which prevents this issue.
-See the sample app for more details.
+For example, you can programmatically create a fake WebView and immediately set a Locale back which prevents this issue.  
+
+_Localian_ attempts to fix this by preemptive first usage of a WebView inside an AndroidX Startup initializer. For most cases this will be enough to bypass the issue.  
+If this doesn't help, please see the sample app for more details, specifically _LocalianWebViewPatcher_ class which you should try and explicitly implement when needed.
 
 ## App Bundles
 
@@ -133,6 +135,6 @@ limitations under the License.
 
 Maintained and sponsored by [Infinum](http://www.infinum.com).
 
-<a href='https://infinum.co'>
+<a href='https://infinum.com'>
   <img src='https://infinum.co/infinum.png' href='https://infinum.com' width='264'>
 </a>
