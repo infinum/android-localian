@@ -37,7 +37,8 @@ subprojects {
         configurations.all {
             resolutionStrategy {
                 dependencySubstitution {
-                    //substitute module(packages.localian) with project(':localian')
+                    def library = libs.library.get()
+                    substitute module(library.getModule().toString() + ":" + library.getVersionConstraint().toString()) with project(':localian')
                 }
             }
         }
