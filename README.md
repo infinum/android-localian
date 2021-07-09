@@ -28,11 +28,11 @@ Then add the following dependencies in your app `build.gradle` or `build.gradle.
 
 **Groovy**
 ```gradle
-implementation "com.infinum.localian:localian:1.0.0"
+implementation "com.infinum.localian:localian:1.0.1"
 ```
 **KotlinDSL**
 ```kotlin
-implementation("com.infinum.localian:localian:1.0.0")
+implementation("com.infinum.localian:localian:1.0.1")
 ```
 
 ## Setup
