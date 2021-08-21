@@ -1,7 +1,14 @@
 task deployLocalian(dependsOn: [
         ':localian:clean',
-        ':localian:publishReleasePublicationToSonatypeRepository',
-        ':localian:publishReleasePublicationToGithubRepository'
+        ':localian:publishReleasePublicationToSonatypeRepository'
+]) {
+    group = "Deploy"
+    description = "Deploy module to repositories"
+}
+
+task deployDebug(dependsOn: [
+        ':localian:clean',
+        ':localian:publishReleasePublicationToMavenLocal'
 ]) {
     group = "Deploy"
     description = "Deploy module to repositories"
