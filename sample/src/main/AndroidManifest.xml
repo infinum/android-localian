@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +24,17 @@
 
         <activity
             android:name=".SettingsActivity"
+            android:exported="false"
             android:label="@string/settings_label" />
         <activity
             android:name=".ChildActivity"
+            android:exported="false"
             android:label="@string/activity_child_label" />
         <activity
             android:name=".WebViewActivity"
+            android:exported="false"
             android:label="@string/web_view_label" />
 
     </application>
+
 </manifest>
