@@ -57,7 +57,7 @@ An interface _Localian.Cache_ has been exposed for any specific implementations 
 ### Change locale
 
 ``` kotlin
-        Localian.setLocale(context, Locale.CANADA)
+Localian.setLocale(context, Locale.CANADA)
 ```
 
 _Localian_ is not responsible for updating all already loaded locale-based data.
