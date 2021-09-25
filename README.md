@@ -8,7 +8,7 @@ Create a new _Localian_ instance with desired _Locale_ and make your application
 To include _Localian_ in your project, you have to add buildscript dependencies in your project level `build.gradle` or `build.gradle.kts`:
 
 **Groovy**
-```gradle
+```groovy
 buildscript {
     repositories {
         mavenCentral()
@@ -27,12 +27,12 @@ buildscript {
 Then add the following dependencies in your app `build.gradle` or `build.gradle.kts` :
 
 **Groovy**
-```gradle
-implementation "com.infinum.localian:localian:1.0.3"
+```groovy
+implementation "com.infinum.localian:localian:1.0.4"
 ```
 **KotlinDSL**
 ```kotlin
-implementation("com.infinum.localian:localian:1.0.3")
+implementation("com.infinum.localian:localian:1.0.4")
 ```
 
 ## Setup
@@ -85,7 +85,38 @@ You have to set back your desired Locale after the first usage of a WebView.
 For example, you can programmatically create a fake WebView and immediately set a Locale back which prevents this issue.  
 
 _Localian_ attempts to fix this by preemptive first usage of a WebView inside an AndroidX Startup initializer. For most cases this will be enough to bypass the issue.  
-If this doesn't help, please see the sample app for more details, specifically _LocalianWebViewPatcher_ class which you should try and explicitly implement when needed.
+If this doesn't help or presents a performance issue, startup initializer can be disabled but _LocalianWebViewPatcher_ class can be explicitly instantiated instead when appropriate.  
+
+### Disable automatic initialization for WebView patching
+
+In you module Android manifest file, add or modify with following code:
+ ``` xml
+<provider
+    android:name="androidx.startup.InitializationProvider"
+    android:authorities="${applicationId}.androidx-startup"
+    android:exported="false"
+    tools:node="merge">
+    <meta-data android:name="com.infinum.localian.LocalianInitializer"
+        tools:node="remove" />
+</provider>
+ ```
+
+### Passing language tag to initializer
+
+If you can keep the initializer but you still observe unexpected Locale changes, you can pass a language tag from Android manifest via meta data to AndroidX Startup initializer.  
+In you module Android manifest file, add following meta data code in your _application_ XML node:
+ ``` xml
+<application
+    
+    ...
+    
+    <meta-data
+        android:name="com.infinum.localian.initial_locale_language_tag"
+        android:value="hr-HR" />
+            
+</application>
+ ```
+Please pay attention to correct and exact value of meta data _name_ attribute and the fact that _value_ attribute must be a language tag string that conforms to the IETF BCP 47 standard, so no underscores, but hyphens. 
 
 ## App Bundles
 

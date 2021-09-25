@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.infinum.localian.initial_locale_language_tag"
+            android:value="hr-HR" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -3,6 +3,8 @@ package com.infinum.localian
 import android.content.Context
 import android.webkit.WebView
 import androidx.annotation.MainThread
+import com.infinum.localian.extensions.languageTag
+import java.util.Locale
 
 /**
  * LocalianWebViewPatcher implements a workaround that fixes the unwanted side effect while
@@ -22,7 +24,11 @@ public class LocalianWebViewPatcher(
         if (semaphore) {
             semaphore = false
             WebView(context).destroy()
-            Localian.setLocale(context, Localian.getLocale(context))
+
+            context.languageTag()
+                ?.let {
+                    Localian.setLocale(context, Locale.forLanguageTag(it))
+                } ?: Localian.setLocale(context, Localian.getLocale(context))
         }
     }
 }
