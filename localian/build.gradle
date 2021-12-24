@@ -3,8 +3,6 @@ plugins {
     id "kotlin-android"
 }
 
-apply from: 'jacoco.gradle'
-
 android {
     buildFeatures {
         buildConfig = false
