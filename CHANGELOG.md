@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## Version 1.0.6
+
+_2022-08-05_
+
+* Update to Kotlin 1.7.10.
+* Check if Webkit is enabled before instancing WebView. 
+
 ## Version 1.0.5
 
 _2021-12-24_

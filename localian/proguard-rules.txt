@@ -5,6 +5,6 @@
 -keep public class com.infinum.localian.Localian {
   public protected *;
 }
--keep public class com.infinum.localian.LocalianWebViewPatcher {
+-keep public class com.infinum.localian.patcher.LocalianWebViewPatcher {
   public protected *;
 }

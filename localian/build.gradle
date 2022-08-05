@@ -46,11 +46,17 @@ android {
         freeCompilerArgs += [
                 '-Xexplicit-api=strict'
         ]
-        useIR = true
     }
 
     sourceSets.each {
         it.java.srcDirs += "src/$it.name/kotlin"
+    }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 }
 

@@ -3,18 +3,15 @@ package com.infinum.localian
 import android.content.Context
 import android.webkit.WebView
 import androidx.startup.Initializer
-import com.infinum.localian.extensions.languageTag
-import java.util.Locale
+import com.infinum.localian.extensions.isWebViewEnabled
+import com.infinum.localian.patcher.WebViewPatcher
 
 internal class LocalianInitializer : Initializer<Class<LocalianInitializer>> {
 
     override fun create(context: Context): Class<LocalianInitializer> {
-        WebView(context).destroy()
+        takeIf { isWebViewEnabled() }?.let { WebView(context).destroy() }
 
-        context.languageTag()
-            ?.let {
-                Localian.setLocale(context, Locale.forLanguageTag(it))
-            } ?: Localian.setLocale(context, Localian.getLocale(context))
+        WebViewPatcher(context)()
 
         return LocalianInitializer::class.java
     }
