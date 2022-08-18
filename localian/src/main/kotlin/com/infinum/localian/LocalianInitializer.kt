@@ -9,7 +9,7 @@ import com.infinum.localian.patcher.WebViewPatcher
 internal class LocalianInitializer : Initializer<Class<LocalianInitializer>> {
 
     override fun create(context: Context): Class<LocalianInitializer> {
-        takeIf { isWebViewEnabled() }?.let { WebView(context).destroy() }
+        if (isWebViewEnabled()) WebView(context).destroy()
 
         WebViewPatcher(context)()
 

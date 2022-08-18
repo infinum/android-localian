@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## Version 1.0.7
+
+_2022-08-18_
+
+* Harden check for missing or disabled WebView.
+
 ## Version 1.0.6
 
 _2022-08-05_

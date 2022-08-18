@@ -22,7 +22,7 @@ public class LocalianWebViewPatcher(
     public fun patch() {
         if (semaphore) {
             semaphore = false
-            takeIf { isWebViewEnabled() }?.let { WebView(context).destroy() }
+            if (isWebViewEnabled()) WebView(context).destroy()
 
             WebViewPatcher(context)()
         }
