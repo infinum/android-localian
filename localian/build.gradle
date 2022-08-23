@@ -64,6 +64,7 @@ android {
 dependencies {
     implementation libs.kotlin.core
     implementation libs.bundles.androidx
+    api libs.androidx.startup
 
     testImplementation libs.bundles.testing
 }

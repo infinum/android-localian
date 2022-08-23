@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## Version 1.0.8
+
+_2022-08-23_
+
+* Add compatibility with Android 13 Tiramisu.
+* Expose new manifest metadata to follow system locale.
+
 ## Version 1.0.7
 
 _2022-08-18_

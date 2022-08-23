@@ -4,6 +4,7 @@ import android.app.Application
 import com.infinum.localian.Localian
 import java.util.Locale
 
+
 class SampleApp : Application() {
 
     companion object {
@@ -15,6 +16,6 @@ class SampleApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Localian.run(application = this, locale = ENGLISH)
+        Localian.run(application = this, locale = ENGLISH, followSystemLocale = true)
     }
 }

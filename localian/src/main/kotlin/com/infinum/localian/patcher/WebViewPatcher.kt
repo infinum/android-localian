@@ -2,7 +2,8 @@ package com.infinum.localian.patcher
 
 import android.content.Context
 import com.infinum.localian.Localian
-import com.infinum.localian.extensions.languageTag
+import com.infinum.localian.extensions.followSystemLocaleMetadata
+import com.infinum.localian.extensions.languageTagMetadata
 import java.util.Locale
 
 internal class WebViewPatcher(
@@ -10,8 +11,12 @@ internal class WebViewPatcher(
 ) {
 
     operator fun invoke() =
-        context.languageTag()
-            ?.let {
-                Localian.setLocale(context, Locale.forLanguageTag(it))
-            } ?: Localian.setLocale(context, Localian.getLocale(context))
+        if (context.followSystemLocaleMetadata().not()) {
+            context.languageTagMetadata()
+                ?.let {
+                    Localian.setLocale(context, Locale.forLanguageTag(it))
+                } ?: Localian.setLocale(context, Localian.getLocale(context))
+        } else {
+            Unit
+        }
 }

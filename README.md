@@ -28,11 +28,11 @@ Then add the following dependencies in your app `build.gradle` or `build.gradle.
 
 **Groovy**
 ```groovy
-implementation "com.infinum.localian:localian:1.0.7"
+implementation "com.infinum.localian:localian:1.0.8"
 ```
 **KotlinDSL**
 ```kotlin
-implementation("com.infinum.localian:localian:1.0.7")
+implementation("com.infinum.localian:localian:1.0.8")
 ```
 
 ## Setup
@@ -116,7 +116,23 @@ In you module Android manifest file, add following meta data code in your _appli
             
 </application>
  ```
-Please pay attention to correct and exact value of meta data _name_ attribute and the fact that _value_ attribute must be a language tag string that conforms to the IETF BCP 47 standard, so no underscores, but hyphens. 
+Please pay attention to correct and exact value of meta data _name_ attribute and the fact that _value_ attribute must be a language tag string that conforms to the IETF BCP 47 standard, so no underscores, but hyphens.
+
+### Android 13 Tiramisu compatibility
+
+_Localian_ can be used to observe system Locale managed per application on Android 13.   
+In you module Android manifest file, add following meta data code in your _application_ XML node:
+ ``` xml
+<application
+    
+    ...
+    
+    <meta-data
+        android:name="com.infinum.localian.follow_system_locale"
+        android:value="true" />
+            
+</application>
+ ```
 
 ## App Bundles
 

@@ -36,10 +36,15 @@ public object Localian {
     public fun run(
         application: Application,
         locale: Locale = Locale.getDefault(),
-        cache: Cache = PreferenceCache(application, locale)
+        cache: Cache = PreferenceCache(application, locale),
+        followSystemLocale: Boolean = false
     ) {
         this.locale = locale
         this.cache = cache
+
+        if (followSystemLocale) {
+            followSystemLocale(application)
+        }
 
         application.registerActivityLifecycleCallbacks(
             ActivityCallbacks {
