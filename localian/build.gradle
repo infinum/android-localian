@@ -9,6 +9,8 @@ android {
         viewBinding = false
     }
 
+    namespace = "com.infinum.localian"
+
     compileSdkVersion buildConfig.compileSdk
     buildToolsVersion buildConfig.buildTools
 
@@ -36,13 +38,16 @@ android {
 
     resourcePrefix 'localian_'
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    kotlin {
+        jvmToolchain(8)
+    }
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(8))
+        }
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
         freeCompilerArgs += [
                 '-Xexplicit-api=strict',
                 '-Xjvm-default=all'

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## Version 1.0.9
+
+_2023-03-21_
+
+* Update to Kotlin 1.8.10.
+* Update dependencies.
+* Align with Gradle 8.
+
 ## Version 1.0.8
 
 _2022-08-23_

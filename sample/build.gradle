@@ -8,6 +8,8 @@ android {
         viewBinding = true
     }
 
+    namespace = "com.infinum.localian.sample"
+
     compileSdkVersion buildConfig.compileSdk
     buildToolsVersion buildConfig.buildTools
 
@@ -25,10 +27,20 @@ android {
     sourceSets.each {
         it.java.srcDirs += "src/$it.name/kotlin"
     }
+
+    kotlin {
+        jvmToolchain(8)
+    }
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(8))
+        }
+    }
 }
 
 dependencies {
     implementation libs.kotlin.core
     implementation libs.androidx.appcompat
+    implementation libs.androidx.viewmodel
     implementation project(":localian")
 }
