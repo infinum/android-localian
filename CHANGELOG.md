@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## Version 1.1.0
+
+_2023-04-07_
+
+* Fix nullability of metadata in application level manifest.
+
 ## Version 1.0.9
 
 _2023-03-21_

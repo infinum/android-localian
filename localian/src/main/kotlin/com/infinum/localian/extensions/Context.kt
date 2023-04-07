@@ -14,12 +14,12 @@ private const val KEY_FOLLOW_SYSTEM_LOCALE: String =
 
 internal fun Context.languageTagMetadata(): String? =
     info.metaData
-        .getString(KEY_INITIAL_LANGUAGE_TAG, null)
+        ?.getString(KEY_INITIAL_LANGUAGE_TAG, null)
         ?.takeIf { it.isNotBlank() }
 
 internal fun Context.followSystemLocaleMetadata(): Boolean =
     info.metaData
-        .getBoolean(KEY_FOLLOW_SYSTEM_LOCALE, false)
+        ?.getBoolean(KEY_FOLLOW_SYSTEM_LOCALE, false) ?: false
 
 @Suppress("DEPRECATION")
 private val Context.info: ApplicationInfo
