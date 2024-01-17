@@ -1,3 +1,4 @@
+![ic-localian-android_new](https://github.com/infinum/android-localian/assets/55816664/1cf7eaab-1102-40d3-8b12-082fcf7e75a2)
 # Localian
 
 Localian is a library that manipulates your application locale and language across multiple Android API levels with possibility not to restart application process.
