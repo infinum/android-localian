@@ -1,5 +1,5 @@
 [versions]
-localian = "1.1.0"
+localian = "2.0.0"
 gradle = "8.13.2"
 kotlin = "2.2.0"
 appcompat = "1.7.1"
