@@ -13,7 +13,6 @@ buildscript {
         classpath libs.kotlin.gradle
         classpath libs.cpd
         classpath libs.detekt.gradle
-        classpath libs.ktlint
         classpath libs.dokka
     }
 }
@@ -29,7 +28,6 @@ allprojects {
 subprojects {
     apply from: "$rootDir/cpd.gradle"
     apply from: "$rootDir/detekt.gradle"
-    apply from: "$rootDir/ktlint.gradle"
     apply from: "$rootDir/dokka.gradle"
 }
 
@@ -57,13 +55,6 @@ task detektAll(dependsOn: [
     description = "Run Detekt on all modules"
 }
 
-task ktlintAll(dependsOn: [
-        ':localian:ktlintCheck'
-]) {
-    group = "Verification"
-    description = "Run ktlint on all modules"
-}
-
 task cpdAll(dependsOn: [
         ':localian:cpdCheck'
 ]) {
@@ -74,7 +65,6 @@ task cpdAll(dependsOn: [
 task runStaticChecks(dependsOn: [
         ':lintAll',
         ':detektAll',
-        ':ktlintAll',
         ':cpdAll'
 ]) {
     group = "Verification"
