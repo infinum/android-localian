@@ -1,20 +1,18 @@
 [versions]
-localian = "1.0.9"
-gradle = "7.4.2"
-kotlin = "1.8.10"
-appcompat = "1.6.1"
-viewmodel = "2.6.0"
-annotation = "1.6.0"
-startup = "1.1.1"
-preference = "1.2.0"
-detekt = "1.21.0"
-ktlintplugin = "10.3.0"
-ktlint = "0.45.2"
-cpd = "3.3"
-dokka = "1.8.10"
+localian = "2.0.0"
+gradle = "8.13.2"
+kotlin = "2.2.0"
+appcompat = "1.7.1"
+viewmodel = "2.10.0"
+annotation = "1.9.1"
+startup = "1.2.0"
+preference = "1.2.1"
+detekt = "1.23.8"
+cpd = "3.5"
+dokka = "2.1.0"
 junit = "4.13.2"
-mockk = "1.13.2"
-json = "20220924"
+mockk = "1.14.9"
+json = "20251224"
 
 [libraries]
 library = { module = "com.infinum.localian:localian", version.ref = "localian" }
@@ -32,8 +30,6 @@ androidx-preference = { module = "androidx.preference:preference-ktx", version.r
 
 detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-
-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlintplugin" }
 
 cpd = { module = "de.aaschmid:gradle-cpd-plugin", version.ref = "cpd" }
 

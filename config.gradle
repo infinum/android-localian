@@ -1,13 +1,13 @@
 ext {
-    def major = 1
-    def minor = 1
+    def major = 2
+    def minor = 0
     def patch = 0
 
     buildConfig = [
-            "minSdk"    : 21,
-            "compileSdk": 33,
-            "targetSdk" : 33,
-            "buildTools": "33.0.2"
+            "minSdk"    : 23,
+            "compileSdk": 36,
+            "targetSdk" : 36,
+            "buildTools": "36.0.0"
     ]
     releaseConfig = [
             "group"      : "com.infinum.localian",

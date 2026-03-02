@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## Version 2.0.0
+
+_2026-03-02_
+
+* Update minSdk to 23
+* Update to Kotlin 2.2.0.
+* Update dependencies.
+
 ## Version 1.1.0
 
 _2023-04-07_
