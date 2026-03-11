@@ -11,7 +11,6 @@ buildscript {
     dependencies {
         classpath libs.tools.gradle
         classpath libs.kotlin.gradle
-        classpath libs.cpd
         classpath libs.detekt.gradle
         classpath libs.dokka
     }
@@ -52,7 +51,6 @@ allprojects {
 }
 
 subprojects {
-    apply from: "$rootDir/cpd.gradle"
     apply from: "$rootDir/detekt.gradle"
     apply from: "$rootDir/dokka.gradle"
 
@@ -107,17 +105,9 @@ task detektAll(dependsOn: [
     description = "Run Detekt on all modules"
 }
 
-task cpdAll(dependsOn: [
-        ':localian:cpdCheck'
-]) {
-    group = "Verification"
-    description = "Run CPD on all modules"
-}
-
 task runStaticChecks(dependsOn: [
         ':lintAll',
-        ':detektAll',
-        ':cpdAll'
+        ':detektAll'
 ]) {
     group = "Verification"
     description = "Run static checks on all modules"
