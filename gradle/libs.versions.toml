@@ -14,6 +14,7 @@ dokka = "2.1.0"
 junit = "4.13.2"
 mockk = "1.14.9"
 json = "20251224"
+netty = "4.1.118.Final"
 
 [libraries]
 library = { module = "com.infinum.localian:localian", version.ref = "localian" }
@@ -39,6 +40,7 @@ dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dok
 junit = { module = "junit:junit", version.ref = "junit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 json = { module = "org.json:json", version.ref = "json" }
+netty-handler = { group = "io.netty", name = "netty-handler", version.ref = "netty" }
 
 [bundles]
 androidx = [

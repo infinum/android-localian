@@ -29,6 +29,14 @@ subprojects {
     apply from: "$rootDir/cpd.gradle"
     apply from: "$rootDir/detekt.gradle"
     apply from: "$rootDir/dokka.gradle"
+
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "io.netty" && requested.name == "netty-handler") {
+                useVersion(libs.versions.netty.get())
+            }
+        }
+    }
 }
 
 apply from: "deploy.gradle"
