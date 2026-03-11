@@ -15,6 +15,7 @@ junit = "4.13.2"
 mockk = "1.14.9"
 json = "20251224"
 netty = "4.1.118.Final"
+protobuf-kotlin = "3.25.5"
 
 [libraries]
 library = { module = "com.infinum.localian:localian", version.ref = "localian" }
