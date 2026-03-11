@@ -2,6 +2,7 @@ apply plugin: "de.aaschmid.cpd"
 
 cpd {
     language = 'kotlin'
+    toolVersion = libs.versions.pmd.get()
 }
 
 cpdCheck {
