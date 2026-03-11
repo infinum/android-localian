@@ -1,14 +1,13 @@
 [versions]
 localian = "2.0.0"
-gradle = "8.13.2"
-kotlin = "2.2.0"
+gradle = "9.1.0-rc01"
+kotlin = "2.3.10"
 appcompat = "1.7.1"
 viewmodel = "2.10.0"
 annotation = "1.9.1"
 startup = "1.2.0"
 preference = "1.2.1"
 detekt = "1.23.8"
-cpd = "3.5"
 dokka = "2.1.0"
 junit = "4.13.2"
 mockk = "1.14.9"
@@ -30,8 +29,6 @@ androidx-preference = { module = "androidx.preference:preference-ktx", version.r
 
 detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-
-cpd = { module = "de.aaschmid:gradle-cpd-plugin", version.ref = "cpd" }
 
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 

@@ -1,71 +1,38 @@
 apply plugin: "org.jetbrains.dokka"
 
-tasks.named("dokkaJavadoc") {
-    outputDirectory.set(file("$buildDir/javadoc"))
-
-    dokkaSourceSets {
-        named("main") {
-            moduleName.set(rootProject.name)
-            includeNonPublic.set(false)
-            skipDeprecated.set(true)
-            suppressObviousFunctions.set(true)
-            suppressInheritedMembers.set(true)
-            reportUndocumented.set(true)
-            skipEmptyPackages.set(true)
-            platform.set(org.jetbrains.dokka.Platform.jvm)
-            jdkVersion.set(8)
-            noStdlibLink.set(false)
-            noJdkLink.set(false)
-            noAndroidSdkLink.set(false)
-            androidVariants.set(["debug"])
-            sourceLink {
-                localDirectory.set(file("src/main/kotlin"))
-                remoteUrl.set(uri("https://github.com/infinum/android-localian/"))
-                remoteLineSuffix.set("#L")
-            }
-            perPackageOption {
-                prefix.set("com.infinum.localian.extensions")
-                suppress.set(true)
-            }
-            perPackageOption {
-                prefix.set("com.infinum.localian.sample")
-                suppress.set(true)
-            }
-        }
+// Configure Dokka V2
+dokka {
+    dokkaPublications.html {
+        outputDirectory.set(project.layout.buildDirectory.dir("javadoc"))
     }
-}
 
-tasks.named("dokkaHtml") {
-    outputDirectory.set(file("$buildDir/html"))
+    dokkaSourceSets.register("main") {
+        // Source directories
+        sourceRoots.from(file("src/main/kotlin"))
+        sourceRoots.from(file("src/main/java"))
+        
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl.set(uri("https://github.com/infinum/android-localian/"))
+            remoteLineSuffix.set("#L")
+        }
+        
+        jdkVersion.set(8)
+        
+        reportUndocumented.set(true)
+        skipDeprecated.set(false)
+        skipEmptyPackages.set(true)
 
-    dokkaSourceSets {
-        named("main") {
-            moduleName.set(rootProject.name)
-            includeNonPublic.set(false)
-            skipDeprecated.set(true)
-            suppressObviousFunctions.set(true)
-            suppressInheritedMembers.set(true)
-            reportUndocumented.set(true)
-            skipEmptyPackages.set(true)
-            platform.set(org.jetbrains.dokka.Platform.jvm)
-            jdkVersion.set(8)
-            noStdlibLink.set(false)
-            noJdkLink.set(false)
-            noAndroidSdkLink.set(false)
-            androidVariants.set(["debug"])
-            sourceLink {
-                localDirectory.set(file("src/main/kotlin"))
-                remoteUrl.set(uri("https://github.com/infinum/android-localian/"))
-                remoteLineSuffix.set("#L")
-            }
-            perPackageOption {
-                prefix.set("com.infinum.localian.extensions")
-                suppress.set(true)
-            }
-            perPackageOption {
-                prefix.set("com.infinum.localian.sample")
-                suppress.set(true)
-            }
+        // Suppress extensions package
+        perPackageOption {
+            matchingRegex.set("com\\.infinum\\.localian\\.extensions.*")
+            suppress.set(true)
+        }
+        
+        // Suppress sample package
+        perPackageOption {
+            matchingRegex.set("com\\.infinum\\.localian\\.sample.*")
+            suppress.set(true)
         }
     }
 }
