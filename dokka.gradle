@@ -4,7 +4,7 @@ tasks.named("dokkaJavadoc") {
     outputDirectory.set(file("$buildDir/javadoc"))
 
     dokkaSourceSets {
-        named("main") {
+        configureEach {
             moduleName.set(rootProject.name)
             includeNonPublic.set(false)
             skipDeprecated.set(true)
@@ -17,7 +17,6 @@ tasks.named("dokkaJavadoc") {
             noStdlibLink.set(false)
             noJdkLink.set(false)
             noAndroidSdkLink.set(false)
-            androidVariants.set(["debug"])
             sourceLink {
                 localDirectory.set(file("src/main/kotlin"))
                 remoteUrl.set(uri("https://github.com/infinum/android-localian/"))
@@ -39,7 +38,7 @@ tasks.named("dokkaHtml") {
     outputDirectory.set(file("$buildDir/html"))
 
     dokkaSourceSets {
-        named("main") {
+        configureEach {
             moduleName.set(rootProject.name)
             includeNonPublic.set(false)
             skipDeprecated.set(true)
@@ -52,7 +51,6 @@ tasks.named("dokkaHtml") {
             noStdlibLink.set(false)
             noJdkLink.set(false)
             noAndroidSdkLink.set(false)
-            androidVariants.set(["debug"])
             sourceLink {
                 localDirectory.set(file("src/main/kotlin"))
                 remoteUrl.set(uri("https://github.com/infinum/android-localian/"))

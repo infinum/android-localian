@@ -1,6 +1,5 @@
 plugins {
     id "com.android.library"
-    id "kotlin-android"
 }
 
 android {
@@ -16,23 +15,17 @@ android {
 
     defaultConfig {
         minSdkVersion buildConfig.minSdk
-        targetSdkVersion buildConfig.targetSdk
-        versionCode releaseConfig.versionCode
-        versionName releaseConfig.version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
-            testCoverageEnabled true
-            debuggable true
             minifyEnabled false
         }
         release {
-            debuggable false
             minifyEnabled true
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt"
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.txt"
         }
     }
 
@@ -40,18 +33,14 @@ android {
 
     kotlin {
         jvmToolchain(8)
+        compilerOptions {
+            freeCompilerArgs.add('-Xexplicit-api=strict')
+        }
     }
     java {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(8))
         }
-    }
-
-    kotlinOptions {
-        freeCompilerArgs += [
-                '-Xexplicit-api=strict',
-                '-Xjvm-default=all'
-        ]
     }
 
     sourceSets.each {

@@ -1,6 +1,6 @@
 [versions]
 localian = "2.0.0"
-gradle = "8.13.2"
+gradle = "9.0.1"
 kotlin = "2.3.10"
 appcompat = "1.7.1"
 viewmodel = "2.10.0"
