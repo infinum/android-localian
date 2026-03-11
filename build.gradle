@@ -44,6 +44,9 @@ subprojects {
             if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
                 useVersion(libs.versions.jose4j.get())
             }
+            if (requested.group == "org.apache.commons" && requested.name == "commons-compress") {
+                useVersion(libs.versions.commons.compress.get())
+            }
         }
     }
 }
