@@ -15,7 +15,7 @@ jose4j = "0.9.6"
 junit = "4.13.2"
 mockk = "1.14.9"
 json = "20251224"
-netty = "4.1.124.Final"
+netty = "4.1.129.Final"
 protobuf-kotlin = "3.25.5"
 jdom2 = "2.0.6.1"
 
