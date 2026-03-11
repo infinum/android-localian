@@ -14,7 +14,7 @@ dokka = "2.1.0"
 junit = "4.13.2"
 mockk = "1.14.9"
 json = "20251224"
-netty = "4.1.118.Final"
+netty = "4.1.124.Final"
 protobuf-kotlin = "3.25.5"
 jdom2 = "2.0.6.1"
 
