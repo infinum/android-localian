@@ -11,6 +11,7 @@ detekt = "1.23.8"
 cpd = "3.5"
 pmd = "7.10.0"
 dokka = "2.1.0"
+jose4j = "0.9.6"
 junit = "4.13.2"
 mockk = "1.14.9"
 json = "20251224"
@@ -38,6 +39,8 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 cpd = { module = "de.aaschmid:gradle-cpd-plugin", version.ref = "cpd" }
 
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+
+jose4j = { module = "org.bitbucket.b_c:jose4j", version.ref = "jose4j" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }

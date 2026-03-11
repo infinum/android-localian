@@ -41,6 +41,9 @@ subprojects {
             if (requested.group == "org.jdom" && requested.name == "jdom2") {
                 useVersion(libs.versions.jdom2.get())
             }
+            if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
+                useVersion(libs.versions.jose4j.get())
+            }
         }
     }
 }
