@@ -38,6 +38,9 @@ subprojects {
             if (requested.group == "com.google.protobuf" && requested.name == "protobuf-kotlin") {
                 useVersion(libs.versions.protobuf.kotlin.get())
             }
+            if (requested.group == "org.jdom" && requested.name == "jdom2") {
+                useVersion(libs.versions.jdom2.get())
+            }
         }
     }
 }
