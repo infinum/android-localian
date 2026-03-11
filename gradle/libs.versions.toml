@@ -20,6 +20,7 @@ json = "20251224"
 netty = "4.1.129.Final"
 protobuf-kotlin = "3.25.5"
 jdom2 = "2.0.6.1"
+rhino = "1.9.1"
 
 [libraries]
 library = { module = "com.infinum.localian:localian", version.ref = "localian" }
@@ -50,6 +51,7 @@ junit = { module = "junit:junit", version.ref = "junit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 json = { module = "org.json:json", version.ref = "json" }
 netty-handler = { group = "io.netty", name = "netty-handler", version.ref = "netty" }
+rhino = { module = "org.mozilla:rhino", version.ref = "rhino" }
 
 [bundles]
 androidx = [
