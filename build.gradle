@@ -14,32 +14,6 @@ buildscript {
         classpath libs.detekt.gradle
         classpath libs.dokka
     }
-
-    configurations.classpath {
-        resolutionStrategy.eachDependency {
-            if (requested.group == "io.netty" && requested.name == "netty-handler") {
-                useVersion(libs.versions.netty.get())
-            }
-            if (requested.group == "com.google.protobuf" && requested.name == "protobuf-kotlin") {
-                useVersion(libs.versions.protobuf.kotlin.get())
-            }
-            if (requested.group == "org.jdom" && requested.name == "jdom2") {
-                useVersion(libs.versions.jdom2.get())
-            }
-            if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
-                useVersion(libs.versions.jose4j.get())
-            }
-            if (requested.group == "org.apache.commons" && requested.name == "commons-compress") {
-                useVersion(libs.versions.commons.compress.get())
-            }
-            if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
-                useVersion(libs.versions.commons.lang3.get())
-            }
-            if (requested.group == "org.mozilla" && requested.name == "rhino") {
-                useVersion(libs.versions.rhino.get())
-            }
-        }
-    }
 }
 
 allprojects {
