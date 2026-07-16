@@ -10,6 +10,7 @@ preference = "1.2.1"
 detekt = "1.23.8"
 dokka = "2.1.0"
 bouncycastle = "1.81.1"
+jackson = "2.18.8"
 junit = "4.13.2"
 mockk = "1.14.9"
 json = "20251224"
@@ -34,6 +35,7 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 
 bouncycastle-bcprov = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
