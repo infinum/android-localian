@@ -13,8 +13,6 @@ buildscript {
         classpath libs.kotlin.gradle
         classpath libs.detekt.gradle
         classpath libs.dokka
-        classpath libs.bouncycastle.bcprov
-        classpath libs.jackson.databind
     }
 }
 
