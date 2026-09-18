@@ -111,6 +111,11 @@ Three details of this conversion are easy to get wrong:
   it pins the application to that language and prevents subsequent device
   language changes from taking effect. Values matching the current device
   language should therefore be ignored.
+- **The system language choice is stored separately.** `key_follow_system_locale`
+  is `true` when the user had selected the device language. The locale saved next
+  to it is then the device language of that moment rather than a selection, and
+  applying it has the same effect as applying the device language above. An empty
+  locale list, which is where both replacements start, already means that choice.
 - **The conversion cannot run in `Application`.** Both APIs apply the locale
   through the activities. When called from `Application`, `LocaleManager` applies
   it only partially, affecting the title but not the content, and
@@ -132,5 +137,6 @@ git diff master...sample/locale-manager -- sample
 git diff master...sample/appcompat-delegate -- sample
 ```
 
-Neither branch carries the conversion of previously saved Localian preferences
-described above, as the sample has no users whose selection has to be preserved.
+Both branches carry the conversion of previously saved Localian preferences in
+`LocalianMigration`, called from the launcher activity, in the form described
+above.
