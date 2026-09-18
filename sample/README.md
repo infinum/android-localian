@@ -9,6 +9,9 @@ emulator or similar. The
 [`sample/locale-manager`](https://github.com/infinum/android-localian/tree/sample/locale-manager)
 branch uses the platform API directly instead.
 
+`LocalianMigration` converts the language Localian had saved, once, so the
+selection survives the update.
+
 Diff it against `master` to see the migration itself:
 
 ```
