@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId releaseConfig.group
         applicationIdSuffix ".sample"
-        minSdkVersion buildConfig.minSdk
+        minSdkVersion 33
         targetSdkVersion buildConfig.targetSdk
         versionCode releaseConfig.versionCode
         versionName releaseConfig.version
@@ -41,5 +41,4 @@ dependencies {
     implementation libs.kotlin.core
     implementation libs.androidx.appcompat
     implementation libs.androidx.viewmodel
-    implementation project(":localian")
 }
