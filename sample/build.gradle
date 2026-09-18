@@ -41,5 +41,4 @@ dependencies {
     implementation libs.kotlin.core
     implementation libs.androidx.appcompat
     implementation libs.androidx.viewmodel
-    implementation project(":localian")
 }
