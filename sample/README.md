@@ -6,6 +6,9 @@ It requires `minSdk` 33; for lower versions see the
 [`sample/appcompat-delegate`](https://github.com/infinum/android-localian/tree/sample/appcompat-delegate)
 branch.
 
+`LocalianMigration` converts the language Localian had saved, once, so the
+selection survives the update.
+
 Diff it against `master` to see the migration itself:
 
 ```
