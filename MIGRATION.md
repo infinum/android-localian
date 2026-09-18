@@ -115,3 +115,22 @@ Three details of this conversion are easy to get wrong:
   through the activities. When called from `Application`, `LocaleManager` applies
   it only partially, affecting the title but not the content, and
   `AppCompatDelegate` ignores it entirely.
+
+## Worked examples
+
+The sample application in this repository was migrated on two branches, one per
+replacement. Both start from the Localian version on `master`, so the diff
+against it is the migration itself.
+
+| Branch | Replacement | `minSdk` |
+| --- | --- | --- |
+| [`sample/locale-manager`](https://github.com/infinum/android-localian/tree/sample/locale-manager) | `LocaleManager` | raised to 33 |
+| [`sample/appcompat-delegate`](https://github.com/infinum/android-localian/tree/sample/appcompat-delegate) | `AppCompatDelegate` | unchanged, 23 |
+
+```
+git diff master...sample/locale-manager -- sample
+git diff master...sample/appcompat-delegate -- sample
+```
+
+Neither branch carries the conversion of previously saved Localian preferences
+described above, as the sample has no users whose selection has to be preserved.
