@@ -1,16 +1,17 @@
 ![ic-localian-android_new](https://github.com/infinum/android-localian/assets/55816664/1cf7eaab-1102-40d3-8b12-082fcf7e75a2)
 # Localian
 
-> [!IMPORTANT]
+# ⚠️ Deprecated
+
+> [!WARNING]
 > **Localian is deprecated and no longer maintained.**
-> Android now supports per-app languages natively: use
-> [`LocaleManager`](https://developer.android.com/reference/android/app/LocaleManager)
-> on API 33+, or
-> [`AppCompatDelegate.setApplicationLocales`](https://developer.android.com/reference/androidx/appcompat/app/AppCompatDelegate#setApplicationLocales%28androidx.core.os.LocaleListCompat%29)
-> below that. See **[MIGRATION.md](MIGRATION.md)** for a step-by-step guide.
+> It will not receive any further updates, security patches, or bug fixes. Published artifacts stay on Maven Central and existing builds keep working. For inquiries (including potential support), please contact us at `opensource@infinum.com`.
 >
-> Published artifacts stay on Maven Central and existing builds keep working, but
-> there will be no further releases, bug fixes or support.
+> Android supports per-app languages natively, so pick the replacement by your `minSdk`: at 33 or above use
+> [`LocaleManager`](https://developer.android.com/reference/android/app/LocaleManager)
+> directly, and anything lower uses
+> [`AppCompatDelegate.setApplicationLocales`](https://developer.android.com/reference/androidx/appcompat/app/AppCompatDelegate#setApplicationLocales%28androidx.core.os.LocaleListCompat%29)
+> on every OS version, as it forwards to the platform API on API 33 and above. See **[MIGRATION.md](MIGRATION.md)** for a step-by-step guide.
 
 Localian is a library that manipulates your application locale and language across multiple Android API levels with possibility not to restart application process.
 

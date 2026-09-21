@@ -7,22 +7,113 @@ therefore consists largely of removing code.
 
 ## Selecting a replacement
 
+The replacement follows from the application's `minSdk`, not from the API level
+of the device it is running on:
+
 | `minSdk` | Replacement |
 | --- | --- |
 | 33+ | `android.app.LocaleManager`, provided by the platform |
 | below 33 | `AppCompatDelegate`, provided by `androidx.appcompat` 1.6.0+ |
 
+Applications supporting API 32 or lower use `AppCompatDelegate` on every OS
+version, including Android 13 and above, where it forwards to `LocaleManager`
+for both reading and writing. There is no reason to branch on
+`Build.VERSION.SDK_INT` and maintain two code paths.
+
 ## 1. Remove Localian
 
-Remove the dependency, then delete the code it required:
+Remove the dependency, then delete the code and manifest entries it required:
 
 - The `Application` subclass, if it only called `Localian.run(this)`. The
   `android:name` attribute should also be removed from `<application>`.
-- The `recreate()` call made after saving a language, together with any code that
-  rebuilt a screen in `onRestart()` or `onResume()`. Both replacements recreate
-  every activity in the task, including those that are stopped.
+- Any implementation of `Localian.Cache` and any `Localian.Callback`, along with
+  the `recreate()` call made after saving a language and any code that rebuilt a
+  screen in `onRestart()` or `onResume()`. Both replacements recreate every
+  activity in the task, including those that are stopped.
+- The `com.infinum.localian.initial_locale_language_tag` and
+  `com.infinum.localian.follow_system_locale` `<meta-data>` entries in
+  `<application>`. The first has no equivalent: an application no longer picks a
+  starting language, it simply renders in the device language until the user
+  chooses otherwise. The second is now the default, expressed by an empty locale
+  list.
+- The `androidx.startup.InitializationProvider` override that removed
+  `com.infinum.localian.LocalianInitializer`, if the WebView initializer had been
+  disabled, together with any explicit `LocalianWebViewPatcher` instantiation.
+  Nothing replaces these, and nothing regresses; see below.
 
-## 2. Read and write the language
+### The WebView side effect does not come back
+
+Localian applied a locale by calling `Locale.setDefault()` and
+`Resources.updateConfiguration()` on the contexts that were already alive. That
+override existed only inside the process and was not part of the configuration
+the system handed to the application, so anything re-applying that configuration
+discarded it — most notably the first creation of a `WebView`
+([issue 37113860](https://issuetracker.google.com/issues/37113860)), which is
+what `LocalianWebViewPatcher` was repairing.
+
+Both replacements keep the selection outside the process instead: on API 33 and
+above the platform stores it and includes it in the configuration it gives the
+application, and below that AppCompat re-applies it through the base context of
+every `AppCompatActivity`. A `WebView` resetting the locale to the application's
+configuration therefore lands on the selected language, and there is nothing
+left to patch. The sample's WebView screen is the place to confirm this after
+migrating.
+
+## 2. Declare the supported languages
+
+Localian needed no list of the languages an application ships; the system does.
+`android:localeConfig` is what puts the application into
+**Settings → System → Languages → App languages** on Android 13 and above, which
+is where users expect to find a per-app language once the platform owns it.
+Declare it regardless of the replacement chosen, as an application with a lower
+`minSdk` still runs on Android 13 devices. This is the one step of the migration
+that adds something rather than removing it.
+
+Either write the list by hand, in `res/xml/locales_config.xml`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="hr-HR" />
+    <locale android:name="en-US" />
+    <locale android:name="de-DE" />
+</locale-config>
+```
+
+and reference it from `<application>`:
+
+```xml
+<application
+    android:localeConfig="@xml/locales_config">
+```
+
+Or have AGP 8.1 and above generate it from the `values-*` resource folders:
+
+```groovy
+android {
+    androidResources {
+        generateLocaleConfig true
+    }
+}
+```
+
+Generation additionally requires `compileSdk` 33 or higher and a
+`res/resources.properties` file naming the locale of the unqualified `values`
+folder:
+
+```properties
+unqualifiedResLocale=en-US
+```
+
+The two are mutually exclusive: with generation enabled, a hand-written
+`locales_config.xml` fails the build.
+
+Official documentation:
+[per-app language preferences](https://developer.android.com/guide/topics/resources/app-languages),
+[`android:localeConfig`](https://developer.android.com/guide/topics/resources/app-languages#use-localeconfig),
+[automatic generation](https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig).
+
+## 3. Read and write the language
 
 ### API 33 and above
 
@@ -30,9 +121,9 @@ Remove the dependency, then delete the code it required:
 private val localeManager: LocaleManager
     get() = getSystemService(LocaleManager::class.java)
 
-private fun appLanguage(): String =
-    localeManager.applicationLocales.takeUnless { it.isEmpty }?.get(0)?.language
-        ?: resources.configuration.locales[0].language
+private fun appLanguageTag(): String =
+    localeManager.applicationLocales.takeUnless { it.isEmpty }?.get(0)?.toLanguageTag()
+        ?: resources.configuration.locales[0].toLanguageTag()
 
 localeManager.applicationLocales = LocaleList.forLanguageTags(languageTag)
 ```
@@ -45,12 +136,18 @@ language, in which case the language resolved by the application is used instead
 `minSdk` remains unchanged, but all activities must extend `AppCompatActivity`.
 
 ```kotlin
-private fun appLanguage(): String =
-    AppCompatDelegate.getApplicationLocales()[0]?.language
-        ?: resources.configuration.locales[0].language
+private fun appLanguageTag(): String? =
+    (AppCompatDelegate.getApplicationLocales()[0]
+        ?: ConfigurationCompat.getLocales(resources.configuration)[0])
+        ?.toLanguageTag()
 
 AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languageTag))
 ```
+
+Read the selection back as a full BCP 47 tag, through `toLanguageTag()`, and not
+as `Locale.language`: the setter takes tags, and `language` alone collapses
+`en-US` and `en-GB` into the same `en`. Only an application whose picker offers
+a single locale per language can afford to compare language subtags.
 
 The following service is also required in the manifest:
 
@@ -71,7 +168,7 @@ Without it, devices running earlier versions lose the selected language on the
 next cold start. Verify this on an emulator running API 30 or similar, as devices
 on API 33 and above never execute that code path.
 
-## 3. Determine how previously saved languages are handled
+## 4. Determine how previously saved languages are handled
 
 Localian's preferences remain on the device after the update, but they are no
 longer read. Users who had selected a language other than their device language
@@ -110,16 +207,24 @@ Three details of this conversion are easy to get wrong:
   language picker also have a saved value, namely their device language. Applying
   it pins the application to that language and prevents subsequent device
   language changes from taking effect. Values matching the current device
-  language should therefore be ignored.
+  language should therefore be ignored. Compare whole language tags rather than
+  language subtags if the picker offers several regions of one language;
+  otherwise a saved `en-GB` looks like the device's `en-US` and is dropped.
 - **The system language choice is stored separately.** `key_follow_system_locale`
   is `true` when the user had selected the device language. The locale saved next
   to it is then the device language of that moment rather than a selection, and
   applying it has the same effect as applying the device language above. An empty
   locale list, which is where both replacements start, already means that choice.
-- **The conversion cannot run in `Application`.** Both APIs apply the locale
-  through the activities. When called from `Application`, `LocaleManager` applies
-  it only partially, affecting the title but not the content, and
-  `AppCompatDelegate` ignores it entirely.
+- **Where the conversion may run differs between the two replacements.**
+  `LocaleManager` is an application-scoped system service that can be obtained
+  from any context, `Application` included — this is exactly what AppCompat does
+  internally on API 33 and above — so an application with `minSdk` 33 is free to
+  convert anywhere. `AppCompatDelegate`, however, works with the
+  `AppCompatActivity` context on API 32 and lower, so below 33 the conversion has
+  to run from an activity. The launcher activity's `onCreate` satisfies both,
+  which is what the samples use; applying a locale from `Application.onCreate`,
+  while the process is still starting, was observed to take effect only partially
+  in the sample, updating the activity title but not its content.
 
 ## Worked examples
 
@@ -133,10 +238,14 @@ against it is the migration itself.
 | [`sample/appcompat-delegate`](https://github.com/infinum/android-localian/tree/sample/appcompat-delegate) | `AppCompatDelegate` | unchanged, 23 |
 
 ```
-git diff master...sample/locale-manager -- sample
-git diff master...sample/appcompat-delegate -- sample
+git fetch origin
+git diff origin/master...origin/sample/locale-manager -- sample
+git diff origin/master...origin/sample/appcompat-delegate -- sample
 ```
 
 Both branches carry the conversion of previously saved Localian preferences in
 `LocalianMigration`, called from the launcher activity, in the form described
-above.
+above. The sample offers one locale per language, so its check that a saved
+language is not merely the device language compares language subtags; an
+application offering regional variants of the same language has to compare
+complete, normalized tags there instead.
