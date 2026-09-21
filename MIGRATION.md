@@ -237,12 +237,6 @@ against it is the migration itself.
 | [`sample/locale-manager`](https://github.com/infinum/android-localian/tree/sample/locale-manager) | `LocaleManager` | raised to 33 |
 | [`sample/appcompat-delegate`](https://github.com/infinum/android-localian/tree/sample/appcompat-delegate) | `AppCompatDelegate` | unchanged, 23 |
 
-```
-git fetch origin
-git diff origin/master...origin/sample/locale-manager -- sample
-git diff origin/master...origin/sample/appcompat-delegate -- sample
-```
-
 Both branches carry the conversion of previously saved Localian preferences in
 `LocalianMigration`, called from the launcher activity, in the form described
 above. The sample offers one locale per language, so its check that a saved
