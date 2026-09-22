@@ -217,14 +217,15 @@ Three details of this conversion are easy to get wrong:
   locale list, which is where both replacements start, already means that choice.
 - **Where the conversion may run differs between the two replacements.**
   `LocaleManager` is an application-scoped system service that can be obtained
-  from any context, `Application` included — this is exactly what AppCompat does
-  internally on API 33 and above — so an application with `minSdk` 33 is free to
-  convert anywhere. `AppCompatDelegate`, however, works with the
-  `AppCompatActivity` context on API 32 and lower, so below 33 the conversion has
-  to run from an activity. The launcher activity's `onCreate` satisfies both,
-  which is what the samples use; applying a locale from `Application.onCreate`,
-  while the process is still starting, was observed to take effect only partially
-  in the sample, updating the activity title but not its content.
+  from any context, `Application` included, so an application with `minSdk` 33 is
+  free to convert anywhere. `AppCompatDelegate` is the stricter of the two: below
+  API 33 it records the request in a static field and applies it to the activity
+  delegates that are alive, but on API 33 and above it reaches `LocaleManager`
+  through a live activity delegate and does nothing at all when none exists. The
+  launcher activity's `onCreate` satisfies both, which is what the samples use;
+  applying a locale from `Application.onCreate`, while the process is still
+  starting, was in addition observed to take effect only partially in the sample,
+  updating the activity title but not its content.
 
 ## Worked examples
 
