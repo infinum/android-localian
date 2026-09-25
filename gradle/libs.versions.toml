@@ -1,6 +1,6 @@
 [versions]
 localian = "2.0.0"
-gradle = "9.3.1"
+gradle = "9.3.2"
 kotlin = "2.4.10"
 appcompat = "1.8.0"
 viewmodel = "2.11.0"
@@ -11,7 +11,7 @@ detekt = "1.23.8"
 dokka = "2.2.0"
 junit = "4.13.2"
 mockk = "1.14.11"
-json = "20260522"
+json = "20260814"
 
 [libraries]
 library = { module = "com.infinum.localian:localian", version.ref = "localian" }
